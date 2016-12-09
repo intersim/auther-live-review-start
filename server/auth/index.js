@@ -41,13 +41,11 @@ router.post('/signup', function (req, res, next) {
 });
 
 router.get('/me', function (req, res, next) {
-  if (req.session.userId) {
-    User.findById(req.session.userId)
-    .then(function(user) {
-      res.send(user);
-    })
-    .catch(next)
+  if (req.user) {
+    res.json(req.user)
   } else {
     res.sendStatus(401);
   }
 });
+
+router.use('/google', require('./google.oauth'));
